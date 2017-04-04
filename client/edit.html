@@ -1,0 +1,69 @@
+<!--
+
+/*
+    This file is part of Exploration Maps (maps.archisgore.com).
+
+    Exploration Maps is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Exploration Maps is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with Exploration Maps.  If not, see <http://www.gnu.org/licenses/>.
+*/
+-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Dive Markers/Points</title>
+    <script src="/assets/jquery-3.1.0.min.js"></script>
+    <script src="/table.js"></script>
+    <script src="/editor.js"></script>
+    <script src="/assets/tablefilter/tablefilter.js"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/tablefilter/style/tablefilter.css" />
+
+    <script src="/assets/tablefilter/ezEditTable/ezEditTable.js"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/tablefilter/ezEditTable/ezEditTable.css" />
+</head>
+<body>
+<div>
+    <div id="header">
+        <center><h1>Scuba Dive Map Editor</h1></center>
+        <p>You may edit any data about the points in the table below. In addition, you may add new rows, delete rows,
+            make modificaitons, etc.</p>
+        <p><a href="/">You can go back to maps at any time.</a></p>
+    </div>
+    <div id="editor">
+        <div id="controls">
+
+        </div>
+        <div id="tableholder"></div>
+    </div>
+    <div id="footer">
+        <p>The more technically inclined amongst you can track the entire change history
+            in this public repo: <a href="https://github.com/archisgore/dive-site-markers">https://github.com/archisgore/dive-site-markers</a></p>
+    </div>
+</div>
+<script type="text/javascript" src="/assets/notifier.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-56982159-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
