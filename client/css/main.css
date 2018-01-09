@@ -1,0 +1,36 @@
+#map {
+    height: 100vh;
+}
+
+#marker-container {
+    height: 0;
+    overflow: hidden;
+}
+
+table#markersTable thead, table#markersTable tbody {
+    float: left;
+}
+
+.selectOverlay {
+    color: rbg(25,25,25);
+    font-family: Roboto,Arial,sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    padding: inherit 5px;
+    border: 2px solid white;
+    border-radius: 3px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.3);
+    cursor: pointer;
+    margin: 10px 20px;
+}
+
+@media (max-width: 576px) {
+    #map {
+        height: calc(100vh - 30px);
+    }
+
+    .selectOverlay {
+        width: 100px;
+    }
+}
