@@ -14,6 +14,7 @@ app.all('*', function(req, res, next) {
 app.set('port', (process.env.PORT || 8080));
 
 app.use("/assets", express.static('assets'));
+app.use("/css", express.static("client/css"));
 app.use(express.static('.'));
 app.use(cookieParser());
 

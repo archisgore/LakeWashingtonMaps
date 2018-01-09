@@ -524,29 +524,11 @@ var attachEditButton = function() {
 };
 
 var attachOverlaysDropdown = function() {
-    // Set CSS for the control border.
-    var controlUI = document.createElement('div');
-    controlUI.style.backgroundColor = '#fff';
-    controlUI.style.border = '2px solid #fff';
-    controlUI.style.borderRadius = '3px';
-    controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
-    controlUI.style.cursor = 'pointer';
-    controlUI.style.marginBottom = '22px';
-    controlUI.style.marginTop = '10px';
-    controlUI.style.marginLeft = '20px';
-    controlUI.style.textAlign = 'center';
-    controlUI.title = 'Click to add overlays on the map';
 
     // Set CSS for the control interior.
     var controlSelect = document.createElement('select');
-    controlSelect.style.color = 'rgb(25,25,25)';
-    controlSelect.style.fontFamily = 'Roboto,Arial,sans-serif';
-    controlSelect.style.fontSize = '12px';
-    controlSelect.style.fontWeight = '400';
-    controlSelect.style.lineHeight = '20px';
-    controlSelect.style.paddingLeft = '5px';
-    controlSelect.style.paddingRight = '5px';
-    controlSelect.style.borderWidth = '0px';
+    controlSelect.className = "selectOverlay";
+    controlSelect.title = "Click to add overlays on the map";
 
     var noneOption = document.createElement("option");
     noneOption.innerHTML = "No Overlay";
@@ -584,10 +566,5 @@ var attachOverlaysDropdown = function() {
             map.overlayMapTypes.push(gueSidescanOverlay);
         }
     });
-
-    controlUI.appendChild(controlSelect);
-
-
-    controlUI.index = 1;
-    map.controls[google.maps.ControlPosition.LEFT_TOP].push(controlUI);
+    map.controls[google.maps.ControlPosition.LEFT_TOP].push(controlSelect);
 };

@@ -106,5 +106,5 @@ var createMarkersTable = function(markers) {
     table.append(thead);
     table.append(tbody);
 
-    $("body").append(table);
+    $("#marker-container").append(table);
 }
