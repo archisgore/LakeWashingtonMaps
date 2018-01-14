@@ -169,6 +169,7 @@ function initMap() {
     attachEditButton();
     attachHelpButton();
     attachOverlaysDropdown();
+    attachCenterOnSelfButton(infoWindow);
 }
 
 
@@ -458,7 +459,46 @@ var cleanTf = function() {
 };
 
 
+var attachCenterOnSelfButton = function(infoWindow) {
+    function CenterOnSelfButton(controlDiv, map) {
 
+        // Set CSS for the control border.
+        var controlUI = document.createElement('div');
+        controlUI.style.backgroundColor = '#fff';
+        controlUI.style.border = '2px solid #fff';
+        controlUI.style.borderRadius = '3px';
+        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.marginBottom = '22px';
+        controlUI.style.marginTop = '10px';
+        controlUI.style.textAlign = 'center';
+        controlUI.title = 'Click to center the map to your position.';
+        controlDiv.appendChild(controlUI);
+
+        // Set CSS for the control interior.
+        var controlText = document.createElement('div');
+        controlText.style.color = 'rgb(25,25,25)';
+        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+        controlText.style.fontSize = '12px';
+        controlText.style.fontWeight = '400';
+        controlText.style.lineHeight = '20px';
+        controlText.style.paddingLeft = '5px';
+        controlText.style.paddingRight = '5px';
+        controlText.innerHTML = '<img width="12px" height="12px" src="../assets/crosshairs.png"/>';
+        controlUI.appendChild(controlText);
+
+        controlText.addEventListener('click', function() {
+          centerOnSelf(map, infoWindow);
+        });
+    }
+
+    // Create the DIV to hold the Filter Button Control
+    var centerOnSelfButtonDiv = document.createElement('div');
+    var centerOnSelfButton = new CenterOnSelfButton(centerOnSelfButtonDiv, map);
+
+    centerOnSelfButtonDiv.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerOnSelfButtonDiv);
+};
 
 var attachHelpButton = function() {
     // Set CSS for the control border.
@@ -568,3 +608,33 @@ var attachOverlaysDropdown = function() {
     });
     map.controls[google.maps.ControlPosition.LEFT_TOP].push(controlSelect);
 };
+
+var centerOnSelf = function(map, infoWindow) {
+  // Try HTML5 geolocation.
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+
+      infoWindow.setPosition(pos);
+      infoWindow.setContent('You are here!');
+      infoWindow.open(map);
+      map.setCenter(pos);
+    }, function() {
+      handleLocationError(true, infoWindow, map.getCenter());
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
+}
+
+var handleLocationError = function(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+                        'Error: The Geolocation service failed.' :
+                        'Error: Your browser doesn\'t support geolocation.');
+  infoWindow.open(map);
+}
