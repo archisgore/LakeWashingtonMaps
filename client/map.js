@@ -43,11 +43,10 @@ function initMap() {
         },
         scaleControl: true,
         streetViewControl: false,
-        rotateControl: false,
-        fullscreenControl: false
+        rotateControl: true,
+        fullscreenControl: true
 
     });
-
 
     // Normalizes the coords that tiles repeat across the x axis (horizontally)
     // like the standard Google map tiles.
@@ -164,6 +163,11 @@ function initMap() {
     });
 
     displayMarkers(infoWindow);
+
+    google.maps.event.addListener(map, 'click', function(event) {
+      placeMarker(event.latLng, infoWindow);
+    });
+
     originalHash = window.location.hash;
 
     attachEditButton();
@@ -629,6 +633,14 @@ var centerOnSelf = function(map, infoWindow) {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
   }
+}
+
+var placeMarker = function(location, infoWindow) {
+  infoWindow.setPosition(location);
+  infoWindow.setContent('Position: ' + location.toString());
+  infoWindow.open(map);
+
+  map.setCenter(location);
 }
 
 var handleLocationError = function(browserHasGeolocation, infoWindow, pos) {
