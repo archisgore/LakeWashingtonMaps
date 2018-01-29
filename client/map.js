@@ -164,7 +164,7 @@ function initMap() {
 
     displayMarkers(infoWindow);
 
-    google.maps.event.addListener(map, 'click', function(event) {
+    google.maps.event.addListener(map, 'dblclick', function(event) {
       placeMarker(event.latLng, infoWindow);
     });
 
