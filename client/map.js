@@ -22,8 +22,7 @@ var tableDiv;
 var tf;
 var bagOverlay;
 var demOverlay;
-var gueBathyOverlay;
-var gueSidescanOverlay;
+var lakeWashingtonBathyOverlay;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -120,14 +119,14 @@ function initMap() {
         alt: 'DEM from NOAA'
     });
 
-    gueBathyOverlay = new google.maps.ImageMapType({
+    lakeWashingtonBathyOverlay = new google.maps.ImageMapType({
         getTileUrl: function(coord, zoom) {
             var normalizedCoord = getNormalizedCoord(coord, zoom);
             if (!normalizedCoord) {
                 return null;
             }
             var bound = Math.pow(2, zoom);
-            return 'http://www.gue-seattle.org/maps/tiles/bathy/lw' +
+            return 'https://archisgore.github.io/lake-washington-bathymetry/tiles' +
                 '/' + zoom + '/' + normalizedCoord.x + '/' +
                 (bound - normalizedCoord.y - 1) + '.png';
 
@@ -135,26 +134,8 @@ function initMap() {
         tileSize: new google.maps.Size(256, 256),
         maxZoom: 19,
         minZoom: 0,
-        name: 'GUE Seattle Bathymetry',
-        alt: 'Bathymetry from GUE Seattle'
-    });
-
-    gueSidescanOverlay = new google.maps.ImageMapType({
-        getTileUrl: function(coord, zoom) {
-            var normalizedCoord = getNormalizedCoord(coord, zoom);
-            if (!normalizedCoord) {
-                return null;
-            }
-            var bound = Math.pow(2, zoom);
-            return 'http://www.gue-seattle.org/maps/tiles/sidescan/lu' +
-                '/' + zoom + '/' + normalizedCoord.x + '/' +
-                (bound - normalizedCoord.y - 1) + '.png';
-        },
-        tileSize: new google.maps.Size(256, 256),
-        maxZoom: 19,
-        minZoom: 0,
-        name: 'GUE Seattle Sidescan',
-        alt: 'Sidescan from GUE Seattle'
+        name: 'Lake Washington/Lake Union Bathymetry',
+        alt: 'Bathymetry overlay for Lake Washington and Lake Union'
     });
 
     // Construct a single InfoWindow.
@@ -586,13 +567,9 @@ var attachOverlaysDropdown = function() {
     demOption.innerHTML = "NOAA Digital Elevation Model";
     controlSelect.appendChild(demOption);
 
-    var gueBathyOption = document.createElement("option");
-    gueBathyOption.innerHTML = "GUE Seattle Bathymetry";
-    controlSelect.appendChild(gueBathyOption);
-
-    var gueSidescanOption = document.createElement("option");
-    gueSidescanOption.innerHTML = "GUE Seattle Sidescan";
-    controlSelect.appendChild(gueSidescanOption);
+    var lakeWaBathyOption = document.createElement("option");
+    lakeWaBathyOption.innerHTML = "Lake Washington/Lake Union Bathymetry";
+    controlSelect.appendChild(lakeWaBathyOption);
 
     controlSelect.addEventListener("change", function(event) {
         var option = controlSelect.options[controlSelect.selectedIndex];
@@ -604,10 +581,8 @@ var attachOverlaysDropdown = function() {
             map.overlayMapTypes.push(bagOverlay);
         } else if (option.innerHTML == "NOAA Digital Elevation Model") {
             map.overlayMapTypes.push(demOverlay);
-        } else if (option.innerHTML == "GUE Seattle Bathymetry") {
-            map.overlayMapTypes.push(gueBathyOverlay);
-        } else if (option.innerHTML == "GUE Seattle Sidescan") {
-            map.overlayMapTypes.push(gueSidescanOverlay);
+        } else if (option.innerHTML == "Lake Washington and Lake Union Bathymetry") {
+            map.overlayMapTypes.push(lakeWaBathyOption);
         }
     });
     map.controls[google.maps.ControlPosition.LEFT_TOP].push(controlSelect);
