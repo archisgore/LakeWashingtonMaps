@@ -132,7 +132,7 @@ function initMap() {
 
         },
         tileSize: new google.maps.Size(256, 256),
-        maxZoom: 21,
+        maxZoom: 19,
         minZoom: 0,
         name: 'Lake Washington/Lake Union Bathymetry',
         alt: 'Bathymetry overlay for Lake Washington and Lake Union'
