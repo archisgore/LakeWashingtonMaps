@@ -151,7 +151,6 @@ function initMap() {
 
     originalHash = window.location.hash;
 
-    attachEditButton();
     attachHelpButton();
     attachOverlaysDropdown();
     attachCenterOnSelfButton(infoWindow);
@@ -520,38 +519,6 @@ var attachHelpButton = function() {
     controlText.style.paddingLeft = '5px';
     controlText.style.paddingRight = '5px';
     controlText.innerHTML = 'Help!';
-    controlUI.appendChild(controlText);
-
-    controlUI.index = 1;
-    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlUI);
-};
-
-
-var attachEditButton = function() {
-    // Set CSS for the control border.
-    var controlUI = document.createElement('div');
-    controlUI.style.backgroundColor = '#fff';
-    controlUI.style.border = '2px solid #fff';
-    controlUI.style.borderRadius = '3px';
-    controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
-    controlUI.style.cursor = 'pointer';
-    controlUI.style.marginBottom = '22px';
-    controlUI.style.marginTop = '5px';
-    controlUI.style.marginRight = '20px';
-    controlUI.style.textAlign = 'center';
-    controlUI.title = 'Edit data used by these maps!';
-
-    // Set CSS for the control interior.
-    var controlText = document.createElement('a');
-    controlText.href = "/edit";
-    controlText.style.color = 'rgb(25,25,25)';
-    controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
-    controlText.style.fontSize = '12px';
-    controlText.style.fontWeight = '400';
-    controlText.style.lineHeight = '20px';
-    controlText.style.paddingLeft = '5px';
-    controlText.style.paddingRight = '5px';
-    controlText.innerHTML = 'Edit Data';
     controlUI.appendChild(controlText);
 
     controlUI.index = 1;
