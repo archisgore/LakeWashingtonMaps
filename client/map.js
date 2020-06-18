@@ -160,6 +160,7 @@ function initMap() {
 
 var displayMarkers = function(infoWindow) {
 
+    // Generate markers
     var markers
     $.get("https://raw.githubusercontent.com/archisgore/dive-site-markers/master/markers.json").done(function(cm) {
         markers = JSON.parse(cm);
@@ -218,6 +219,15 @@ var displayMarkers = function(infoWindow) {
 
         attachMarkerFilterButton(infoWindow, markers);
     });
+
+    // https://developers.google.com/maps/documentation/javascript/marker-clustering
+    // Add a marker clusterer to manage the markers.
+    var markerCluster = new MarkerClusterer(map, markers,
+        {
+            imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
+            maxZoom: 15,
+            zoomOnClick: true
+        });
 
     google.maps.event.addListener(map, "click", function(event) {
         infoWindow.close();
