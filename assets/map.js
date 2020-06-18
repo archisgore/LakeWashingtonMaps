@@ -24,6 +24,8 @@ var bagOverlay;
 var demOverlay;
 var lakeWashingtonBathyOverlay;
 
+const maxMarkerClusterZoom = 15;
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
@@ -192,6 +194,8 @@ var displayMarkers = function(infoWindow) {
             });
         } catch (e) {}
 
+        let googleMarkerObjects = [];
+        let markerSelected = false;
         filteredMarkers.forEach(function(wpt) {
             if (!wpt) return;
             var latlng = new google.maps.LatLng(wpt.lat, wpt.lng);
@@ -201,9 +205,11 @@ var displayMarkers = function(infoWindow) {
                 title: wpt.name,
             };
 
-            wpt.marker = new google.maps.Marker(markerOpts);
-            // Opens the InfoWindow when marker is clicked.
+            const googleMarkerObject = new google.maps.Marker(markerOpts);
+            wpt.marker = googleMarkerObject;
+            googleMarkerObjects.push(googleMarkerObject);
 
+            // Opens the InfoWindow when marker is clicked.
             wpt.marker.addListener('click', function() {
                 showInfoWindow(wpt);
             });
@@ -211,22 +217,26 @@ var displayMarkers = function(infoWindow) {
             //if window hash is on us, open it
             if (window.location.hash.split("#")[1] == wpt.id) {
                 map.setCenter(latlng);
-                map.setZoom(13);
+                map.setZoom(maxMarkerClusterZoom+1); // at least this zoom so marker shows up
                 showInfoWindow(wpt);
+                markerSelected = true;
             }
         });
+
+        if (!markerSelected) { //only cluster if marker is selected
+            // https://developers.google.com/maps/documentation/javascript/marker-clustering
+            // Add a marker clusterer to manage the markers.
+            var markerCluster = new MarkerClusterer(map, googleMarkerObjects,
+            {
+                imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
+                maxZoom: maxMarkerClusterZoom,
+                zoomOnClick: true
+            });
+        }
 
         attachMarkerFilterButton(infoWindow, markers);
     });
 
-    // https://developers.google.com/maps/documentation/javascript/marker-clustering
-    // Add a marker clusterer to manage the markers.
-    var markerCluster = new MarkerClusterer(map, markers,
-        {
-            imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
-            maxZoom: 15,
-            zoomOnClick: true
-        });
 
     google.maps.event.addListener(map, "click", function(event) {
         infoWindow.close();
@@ -478,7 +488,7 @@ var attachCenterOnSelfButton = function(infoWindow) {
         controlText.style.lineHeight = '20px';
         controlText.style.paddingLeft = '5px';
         controlText.style.paddingRight = '5px';
-        controlText.innerHTML = '<img width="12px" height="12px" src="../assets/crosshairs.png"/>';
+        controlText.innerHTML = '<img width="12px" height="12px" src="assets/crosshairs.png"/>';
         controlUI.appendChild(controlText);
 
         controlText.addEventListener('click', function() {
