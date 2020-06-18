@@ -307,6 +307,7 @@ var displayMarkerFilterTable = function(markers) {
         alternate_rows: true,
         auto_filter: true,
         auto_filter_delay: 100,
+        sticky_headers: true,
         btn_reset: true,
         btn: false,
         status_bar: true,
@@ -385,8 +386,7 @@ var attachMarkerFilterButton = function(infoWindow, markers) {
         controlUI.style.borderRadius = '3px';
         controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
         controlUI.style.cursor = 'pointer';
-        controlUI.style.marginBottom = '22px';
-        controlUI.style.marginTop = '10px';
+        controlUI.style.marginLeft = '22px';
         controlUI.style.textAlign = 'center';
         controlUI.title = 'Click to filter the markers on the map';
         controlDiv.appendChild(controlUI);
@@ -415,7 +415,9 @@ var attachMarkerFilterButton = function(infoWindow, markers) {
                 height = Math.floor($(window).height() * 9.0 / 10.0);
                 width = Math.max(Math.min(width, 1000), 200);
                 tableDiv.style.width = width + "px"; //use 60% of the window width
-                tableDiv.style.height = height + "px"; //use 80% of the window height
+                tableDiv.style.height = height + "px"; //use 60% of the window height
+                tableDiv.style.left = (width / 3) + "px"; // Use 20% of window width as left margin
+                tableDiv.style.top = (height / 8) + "px"; // Use 10% of window height as top margin
                 tableDiv.style.zindex = "top";
 
                 tableHeightPx = height - $("#tblHeadCont_markersTable.grd_headTblCont").height() - $("#inf_markersTable.grd_inf").height() - $("div#proTip").height() - 40;
@@ -450,7 +452,7 @@ var attachMarkerFilterButton = function(infoWindow, markers) {
     var filterMarkerButton = new MarkerFilterButton(filterMarkerButtonDiv, map);
 
     filterMarkerButtonDiv.index = 1;
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(filterMarkerButtonDiv);
+    map.controls[google.maps.ControlPosition.LEFT_TOP].push(filterMarkerButtonDiv);
 };
 
 var cleanTf = function() {
@@ -473,7 +475,7 @@ var attachCenterOnSelfButton = function(infoWindow) {
         controlUI.style.borderRadius = '3px';
         controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
         controlUI.style.cursor = 'pointer';
-        controlUI.style.marginBottom = '22px';
+        controlUI.style.marginLeft = '22px';
         controlUI.style.marginTop = '10px';
         controlUI.style.textAlign = 'center';
         controlUI.title = 'Click to center the map to your position.';
@@ -501,7 +503,7 @@ var attachCenterOnSelfButton = function(infoWindow) {
     var centerOnSelfButton = new CenterOnSelfButton(centerOnSelfButtonDiv, map);
 
     centerOnSelfButtonDiv.index = 1;
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerOnSelfButtonDiv);
+    map.controls[google.maps.ControlPosition.LEFT_TOP].push(centerOnSelfButtonDiv);
 };
 
 var attachHelpButton = function() {
@@ -572,7 +574,7 @@ var attachOverlaysDropdown = function() {
             map.overlayMapTypes.push(lakeWashingtonBathyOverlay);
         }
     });
-    map.controls[google.maps.ControlPosition.LEFT_TOP].push(controlSelect);
+    map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(controlSelect);
 };
 
 var centerOnSelf = function(map, infoWindow) {
