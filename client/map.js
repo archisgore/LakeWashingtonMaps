@@ -581,7 +581,7 @@ var attachOverlaysDropdown = function() {
             map.overlayMapTypes.push(bagOverlay);
         } else if (option.innerHTML == "NOAA Digital Elevation Model") {
             map.overlayMapTypes.push(demOverlay);
-        } else if (option.innerHTML == "Lake Washington and Lake Union Bathymetry") {
+        } else if (option.innerHTML == "Lake Washington/Lake Union Bathymetry") {
             map.overlayMapTypes.push(lakeWashingtonBathyOverlay);
         }
     });
