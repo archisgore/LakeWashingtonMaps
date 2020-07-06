@@ -180,7 +180,6 @@ var displayMarkers = function(infoWindow) {
         } else {
             console.log("Unknown object type: " + typeof(cm));
         }
-        
     }).always(function() {
         var filteredMarkers = markers.wpt;
         try {
