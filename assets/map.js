@@ -26,6 +26,10 @@ var lakeWashingtonBathyOverlay;
 
 const maxMarkerClusterZoom = 15;
 
+// for debugging map points locally
+//const MARKER_URL = "https://raw.githubusercontent.com/archisgore/dive-site-markers/master/markers.json"
+const MARKER_URL = "http://localhost:3000/markers.json";
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
@@ -162,9 +166,20 @@ function initMap() {
 var displayMarkers = function(infoWindow) {
 
     // Generate markers
-    var markers
-    $.get("https://raw.githubusercontent.com/archisgore/dive-site-markers/master/markers.json").done(function(cm) {
-        markers = JSON.parse(cm);
+    var markers;
+    $.get(MARKER_URL).done(function(cm) {
+        if (typeof cm == "string") {
+            try {
+                markers = JSON.parse(cm);
+            } catch (e) {
+                console.log("Problem parsing markers JSON");
+                console.error(e)
+            }
+        } else if (typeof cm == "object") {
+            markers = cm;
+        } else {
+            console.log("Unknown object type: " + typeof(cm));
+        }
     }).always(function() {
         var filteredMarkers = markers.wpt;
         try {
